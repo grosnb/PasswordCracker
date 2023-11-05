@@ -8,9 +8,16 @@ import hasher.StaticSHA256;
 public class Cracker {
     public static void main(String[] args) {
         Triplet<String, String, String> t = StaticSHA256.randomHashN(4);
-        String s = (new BruteForceAlgorithm()).crackSalt(t.getRight(), t.getMid(), 3, 5);
         System.out.println("PW: " + t.getLeft() + "\t|\t" + "Salt: " + t.getMid() + "\t|\t" + "Hash: " + t.getRight());
-        System.out.println("Cracked password: " + s);
+        long startT = System.nanoTime();
+        String s = (new BruteForceAlgorithm()).crackSalt(t.getRight(), t.getMid(), 3, 8);
+        long endT = System.nanoTime();
+        System.out.println("Cracked password: " + s + "\t|\t in " + (endT - startT));
+
+        startT = System.nanoTime();
+        s = (new BruteForceAlgorithmCon()).crackSalt(t.getRight(), t.getMid(), 3, 8);
+        endT = System.nanoTime();
+        System.out.println("Cracked password: " + s + "\t|\t in " + (endT - startT));        
 
         String url = "C:\\Users\\Jared\\Desktop\\University\\COMP6841\\Project\\dataSet\\rockyou.txt";
         FileScanner fs = new FileScanner(url);
