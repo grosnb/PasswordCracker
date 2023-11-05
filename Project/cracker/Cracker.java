@@ -23,8 +23,10 @@ public class Cracker {
         FileScanner fs = new FileScanner(url);
         String randomPassword = fs.randomLine();
         Pair<String, String> p = StaticSHA256.hashRandomSalt(randomPassword);
+        startT = System.nanoTime();
         s = (new DictionaryAlgorithm(url)).crackSalt(p.getRight(), p.getLeft(), 0, 30);
+        endT = System.nanoTime();
         System.out.println("PW: " + randomPassword + "\t|\t" + "Salt: " + p.getLeft() + "\t|\t" + "Hash: " + p.getRight());
-        System.out.println("Cracked password: " + s);
+        System.out.println("Cracked password: " + s + "\t|\t in " + (endT - startT));  
     }
 }
